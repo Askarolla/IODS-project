@@ -2,3 +2,11 @@
 # About the project
 
 *Write a short description about the course and add a link to your GitHub repository here. This is an R Markdown (.Rmd) file so you can use R Markdown syntax.*
+## Who am I?
+I am a third year __economics__ student and I am here in Helsinki for one semester as an __Erasmus__ student. 
+
+## What am I hoping to learn at this course?
+In this course I am hoping to deepen my knowledge of working with data. I want to know how to methodically perform a thorough data analysis on large amount of data and come up with some useful findings That skill will be essential for me in the upcoming studies as well as my future career. 
+
+## Where did I hear about this course?
+One of my finish friends recommended me this course as something I should definately take if I want something data oriented.
