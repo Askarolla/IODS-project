@@ -7,10 +7,10 @@
 I am a third year __economics__ student and I am here in Helsinki for one semester as an __Erasmus__ student. 
 
 ## What am I hoping to learn at this course?
-In this course I am hoping to deepen my knowledge of working with data. I want to know how to methodically perform a thorough data analysis on large amount of data and come up with some useful findings That skill will be essential for me in the upcoming studies as well as my future career. 
+In this course I am hoping to deepen my knowledge of working with data. I want to know how to methodically perform a thorough data analysis on large amount of data and come up with some useful findings. That skill will be essential for me in the upcoming studies as well as my future career. 
 
 ## Where did I hear about this course?
-One of my finish friends recommended me this course as something I should definately take if I want something data oriented.
+One of my _finish friends_ recommended me this course as something I should _definately_ take if I want something data oriented.
 
 ## My github repository
 [link](https://github.com/Askarolla/IODS-project)
