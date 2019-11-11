@@ -6,5 +6,9 @@
 - Assume the reader has an introductory course level understanding of writing and reading R code as well as statistical methods.
 - Assume the reader has no previous knowledge of your data or the more advanced methods you are using.
 
-Our newly created dataset comprises of 166 observations, having 7 variables for each. We have a two factor variable for __gender__ (M/F). There are then variables containing age, attitude and points. The last group of variables portraing the approach of each individual; deep, strategic and surface respectively. The latter variables are either integer or numeric.
-Most of the individuals are female (110:56). Majority of people in the dataset is in their early twenties, female participants being on average a little younger. Interesting is, that while males have in general higher attitude score, females score better in the approach variables.The test scores were similar for both sexes though, male median being approximately 1 higher. At the same time, male IQR is higher as well (by 1.25)
+Our newly created dataset comprises of 166 observations, having 7 variables for each. We have a two factor variable for _gender_ (M/F). There are then variables containing _age_, _attitude_ and _points_. The last group of variables portraing the approach of each individual; _deep_, _strategic_ and _surface_ respectively. The latter variables are either integer or numeric.
+
+Most of the individuals are female (110:56). Majority of people in the dataset is in their early twenties, female participants being on average a little younger. The age variable is therefore heavily skewed to the right. Other variables do not display such dramatic shifts. Only the deep variable is slightly skewed to the left. Interesting is, that while males have in general higher attitude score, females score better in the approach variables.The test scores were similar for both sexes though, male median being approximately 1 higher. At the same time, male IQR is higher as well (by 1.25).
+
+There appears to be a correlation between attitude and points, and deep and surface learning, both of which make sense.
+In my first "big" regression model, I chose attitude, stra and surf as the explanatory variables, as they have the highest correlation with points variable.
