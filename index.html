@@ -393,7 +393,7 @@ summary {
 <li><a href="#where-did-i-hear-about-this-course">Where did I hear about this course?</a></li>
 <li><a href="#my-github-repository">My github repository</a></li>
 </ul></li>
-<li><a href="#insert-chapter-2-title-here">Insert chapter 2 title here</a></li>
+<li><a href="#regression-and-model-validation">Regression and model validation</a></li>
 </ul>
 </div>
 
@@ -419,14 +419,17 @@ summary {
 <hr />
 </div>
 </div>
-<div id="insert-chapter-2-title-here" class="section level1">
-<h1>Insert chapter 2 title here</h1>
+<div id="regression-and-model-validation" class="section level1">
+<h1>Regression and model validation</h1>
 <p><em>Describe the work you have done this week and summarize your learning.</em></p>
 <ul>
 <li>Describe your work and results clearly.</li>
 <li>Assume the reader has an introductory course level understanding of writing and reading R code as well as statistical methods.</li>
 <li>Assume the reader has no previous knowledge of your data or the more advanced methods you are using.</li>
 </ul>
+<p>Our newly created dataset comprises of 166 observations, having 7 variables for each. We have a two factor variable for <em>gender</em> (M/F). There are then variables containing <em>age</em>, <em>attitude</em> and <em>points</em>. The last group of variables portraing the approach of each individual; <em>deep</em>, <em>strategic</em> and <em>surface</em> respectively. The latter variables are either integer or numeric.</p>
+<p>Most of the individuals are female (110:56). Majority of people in the dataset is in their early twenties, female participants being on average a little younger. The age variable is therefore heavily skewed to the right. Other variables do not display such dramatic shifts. Only the deep variable is slightly skewed to the left. Interesting is, that while males have in general higher attitude score, females score better in the approach variables.The test scores were similar for both sexes though, male median being approximately 1 higher. At the same time, male IQR is higher as well (by 1.25).</p>
+<p>There appears to be a correlation between attitude and points, and deep and surface learning, both of which make sense. In my first “big” regression model, I chose attitude, stra and surf as the explanatory variables, as they have the highest correlation with points variable.</p>
 <hr />
 </div>
 
