@@ -4,6 +4,8 @@
 install.packages("gdata")
 library(gdata)
 library(dplyr)
+library(ggplot2)
+library(GGally)
 #getting the data
 url <-"http://www.helsinki.fi/~kvehkala/JYTmooc/JYTOPKYS3-data.txt"
 download.file(url, destfile = "datal")
@@ -31,6 +33,7 @@ st_os <- data$ST01 + data$ST09+ data$ST17 + data$ST25
 st_tm <- data$ST04 + data$ST12 + data$ST20 + data$ST28
 stra <- (st_os + st_tm)/8
 
+data$Attitude <- data$Attitude / 10
 #making the new set and filtering out observations where point == 0
 analysis_data <- data.frame(data$gender, data$Age, data$Attitude, deep, stra, surf, data$Points)
 
@@ -49,3 +52,23 @@ write.csv(analysis_data, file = "learning2014.csv", row.names = FALSE)
 #testing that it works
 test <- read.csv("learning2014.csv")
 str(test)
+
+##Analysis
+rm(list = ls(all = TRUE)) #clear environment
+data <- read.csv("learning2014.csv")
+
+data1 <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/learning2014.txt ", sep = ",", header = TRUE)
+#summaries and overview
+summary(data)
+ggpairs(data, lower = list(combo = wrap("facethist", bins = 20)))
+data %>%
+  filter(gender == "M") %>%
+  summarise(IQR(points))
+
+#big model
+model1 <- lm(points ~ attitude +  stra + surf, data)
+summary(model1)
+
+#small model - statistically not significant variables are ommited
+model2 <- lm(points ~ attitude, data)
+summary(model2)
