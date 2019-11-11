@@ -1,21 +1,20 @@
 # Theodor Petřík, November 10, 2019. Regression and model validation.
 
 #packages
-install.packages("gdata")
 library(gdata)
 library(dplyr)
 library(ggplot2)
 library(GGally)
+
 #getting the data
 url <-"http://www.helsinki.fi/~kvehkala/JYTmooc/JYTOPKYS3-data.txt"
 download.file(url, destfile = "datal")
 data <- read.table("datal", header = TRUE, sep="\t", stringsAsFactors = TRUE)
 
-#wrangling
 dim(data)
 str(data)
 
-#there are 183 observations of 60 variables. The variables are all int except for the last one which is factor (gender)
+#there are 183 observations of 60 variables.
 
 #making the analysis data set
 # creating new vars and scaling them
@@ -57,10 +56,10 @@ str(test)
 rm(list = ls(all = TRUE)) #clear environment
 data <- read.csv("learning2014.csv")
 
-data1 <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/learning2014.txt ", sep = ",", header = TRUE)
 #summaries and overview
 summary(data)
 ggpairs(data, lower = list(combo = wrap("facethist", bins = 20)))
+
 data %>%
   filter(gender == "M") %>%
   summarise(IQR(points))
@@ -72,3 +71,7 @@ summary(model1)
 #small model - statistically not significant variables are ommited
 model2 <- lm(points ~ attitude, data)
 summary(model2)
+
+#diagnostic graphs
+par(mfrow = c(2,2))
+plot(model1, which = c(1,2,5))
