@@ -394,6 +394,7 @@ summary {
 <li><a href="#my-github-repository">My github repository</a></li>
 </ul></li>
 <li><a href="#regression-and-model-validation">Regression and model validation</a></li>
+<li><a href="#logistic-regression">Logistic regression</a></li>
 </ul>
 </div>
 
@@ -426,6 +427,9 @@ summary {
 <p>There appears to be a significant correlation between <em>attitude</em> and <em>points</em>, and between <em>deep</em> and <em>surface</em> learning, both of which make sense. In my first “big” regression model, I chose <em>attitude</em>, <em>stra</em> and <em>surf</em> as the explanatory variables, as they have the highest correlation with <em>points</em> variable. After running the model and obtaining the summary, I discovered that only the <em>attitude</em> variable is statistically significant at the 5% level. After I run another “small” model, where the only explanatory variable is <em>attitude</em>. Adjusted R squared of both models is 0.1927 and 0.1856 respectively - not very high. It means that only about 20% changes in the dependent variable can be explained by the variables in our model. Other important variables are most likely omitted. Concerning the <em>attitude</em> variable, we can say that <em>ceteris paribus</em> with increase by 1 in <em>attitude</em>, the individual is expected to receive 3.52 <em>points</em> more.</p>
 <p>Now to the diagnostic plots. Obviously, we assume linearity of the model. Also We assume that the errors are normally distributed, uncorrelated and homoscedastic (constant variance). According to the QQ plot, errors seem to reasonably follow the normality assumption. Residuals vs fitted plot also implies that the homoscedasticity assumption is fulfilled. Residuals vs leverage plot should help identify the observations which have unusually large impact. Our plot doesn´t show any observation which would stand out significantly.</p>
 <hr />
+</div>
+<div id="logistic-regression" class="section level1">
+<h1>Logistic regression</h1>
 </div>
 
 
