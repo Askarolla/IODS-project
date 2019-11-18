@@ -3,6 +3,7 @@
 #libraries
 library(dplyr)
 library(ggplot2)
+library(GGally)
 
 #loading the data & exploring the structure
 mat <- read.csv("data/student-mat.csv", header = TRUE, sep = ";")
@@ -43,5 +44,5 @@ alc <- alc %>%
   mutate(high_use = alc_use > 2)
 
 #saving the tidied dataset
-write.csv(alc, file = "data/alc.csv")
-?write.csv
+alc <- alc[-1]
+write.csv(alc, file = "data/alc.csv", row.names = FALSE)
