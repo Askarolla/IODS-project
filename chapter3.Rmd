@@ -1,1 +1,85 @@
 # Logistic regression
+Loading libraries and data
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+setwd("~/IODS-project/data")
+library(dplyr)
+library(ggplot2)
+library(GGally)
+alc <- read.csv("alc.csv", header = TRUE)
+```
+### Exploring the structure
+The data set contains 382 observations of 35 variables. The variables cover each student´s status. There is information about themself, their family,their school performance, drinking habbits and other.
+```{r}
+str(alc)
+```
+
+### Chosen variables and their effect on alcohol consumption
+Absences: I would expect an individual with higher absence to also have a higher alcohol consumption (positive)<br />
+G3: An individual with high grades could have a lower than average alcohol consumption (negative)<br />
+freetime: With higher free time, higher alcohol consumption (positive)<br />
+studytime: A lot of after school hours spend studying might suggest a lower alcohol consumption (negative)<br />
+
+First, we´ll explore the proposed relationships numerically. I´ll create a dataframe of the chosen variables plus alc_use.
+
+```{r}
+chosen <- data.frame(alc$G3, alc$studytime, alc$absences, alc$freetime, alc$alc_use)
+ggpairs(chosen, 
+        mapping = aes(alpha = 0.6), 
+        lower = list(combo = wrap("facethist", bins = 30))
+        )
+```
+
+Freetime, Studytime and absences indeed show some correlation with the target variable (positive, positive, negative) while higher grades do not suggest lower alcohol consumption (or negligable). Now I will create a liner regression with the chosen variables to evaluate their statistical signifficance.
+
+```{r}
+summary(lm(alc_use ~ G3 + studytime + freetime + absences, data = alc))
+```
+
+Results of the regression confirm the findings in the graph overview and my hypotheses that freetime and absences positively influence alcohol consumption and that studytime negatively. Grades on the other hand do not seem connected to the alcohol consumption.
+
+### Logistic regression
+```{r}
+m <- glm(high_use ~ absences + studytime + G3 + freetime, data = alc, family = "binomial")
+summary(m)
+```
+
+Summary of the logistic regression does not provide an easily predictable outcome therefore I will calculate te odds ratios and theire respective confidence intervals.
+
+```{r message=FALSE, warning=FALSE}
+OR <- coef(m) %>% exp
+# compute confidence intervals (CI)
+CI <- exp(confint(m))
+# print out the odds ratios with their confidence intervals
+cbind(OR, CI)
+```
+
+Interpretation: 
+With increase of absence by 1, the odds of observing high usage of alcohol increase by 6.8%.
+With increase of studytime by 1, the odds of observing high usage descrease by 41.6%.
+With increase of freetime by 1, the odds of observing high usage increase by 41% (this makes sense in relation to studytime, obviously).
+With increase of G3 by 1, the odds of observing high usage decrease by 1.5% (negligable).
+
+The confidence intervals are intervals where the odds ratio will be with 95% certainty located. 
+In comparison with the lm model, glm suggest much higher effect of free/study time on alcohol consumption than absences do. LM model showed more similar effects.
+
+```{r}
+# predict() the probability of high_use
+probabilities <- predict(m, type = "response")
+
+# add the predicted probabilities to 'alc'
+alc <- alc %>%
+  mutate(probability = probabilities) %>%
+  mutate(prediction = probability > 0.5)
+
+# tabulate the target variable versus the predictions
+table(high_use = alc$high_use, prediction = alc$prediction)
+```
+
+The table shows that we have 12 false positives or Type I error and 90 false negatives or Type II error.
+
+```{r}
+#Proportion of inaccurately classified individuals
+102/382
+```
+
+It mean that in 26.7% cases, the model would predict an incorrect outcome. Comparing to the datacamp model (25.6%), my performs even worse.
