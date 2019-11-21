@@ -1,0 +1,15 @@
+#Clustering and classification
+
+```{r}
+library(MASS)
+data("Boston")
+
+dim(Boston)
+str(Boston)
+```
+
+There are 506 observations of 14 variables in the dataset. They are all either numerical or integer - in 2 cases. The variables contain data about housing in suburbs of Boston. There are measures of such as crime rates, nitrogen oxides concentration, population status, its location in relation to other city sites etc.
+
+Distribution of almost all variables displays strange trends. Only variable __rm__ or average number of rooms seems to follow normal distribution. Variables __crim__, __zn__, __chas__ and __blac__ are heavily scewed to one side. The case of __zn__ makes sense though because it is a dummy variable.
+
+When we look at relationships among variables, we see that the strongest negative correlation is between __dis__ (weighted mean of distances to five Boston employment centres) and __indus__ (proportion of non-retail business acres per town), __nox__ (nitrogen oxides concentration (parts per 10 million)) and __age__. These all logicaly make sense. __indus__ displays a strong positive correlation with __tax__ and __nox__. __chas__ has almost no correlation with the other because, again, it is a dummy.
