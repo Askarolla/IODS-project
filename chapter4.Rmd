@@ -1,4 +1,4 @@
-#Clustering and classification
+# Clustering and classification
 
 ```{r echo=TRUE, message=FALSE, warning=FALSE}
 library(MASS)
