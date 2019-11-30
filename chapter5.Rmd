@@ -1,0 +1,70 @@
+# Dimensionality reduction techniques
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+library(MASS)
+library(tidyverse)
+library(ggplot2)
+library(GGally)
+library(corrplot)
+library(FactoMineR)
+
+#loading the data
+human <- read.table("data/human.csv", header = TRUE, sep = ",", row.names = 1)
+```
+
+## Data overview
+
+```{r}
+# summaries
+summary(human)
+```
+
+We can see that health related variebles have huge differences between extremes and IQR. That meens there is big difference between developed and the developing countries. And considering variable Parli.F, the minimum is zero, meening there is at least one country which does not allow women to be in the parliment.
+
+```{r}
+#graphical analysis
+ggpairs(human)
+```
+
+Variables are distributed differently, while labo.fm, edu.exp and parli.fm seem to be distributed quite normally, mat.mor and ado.bir are heavily skewed to the right and life.exp to the left. GNI has a platykurtic shape, that signifies low coefficient of kurtosis (less than zero).
+
+```{r}
+# relationships among variables
+cor(human) %>% corrplot(type = "upper")
+```
+
+There is a very strong negative correlation between edu.exp, life.exp & mat.mor, ado.bir (ado.birt and mat.mor are strongly positively correlated). That makes sense. On the other hand, there is a strong correlation between edu.exp and life.exp, so the more people go to school, the longer are they expected to live.
+
+## Principal component analysis
+
+```{r warning=FALSE, fig.width=14, fig.height=12}
+# analysis on the not scaled data
+pca_human <- prcomp(human)
+summary(pca_human)
+biplot(pca_human, choices = 1:2, cex = c(0.8, 1), col = c("grey40", "deeppink2")) 
+```
+
+
+```{r warning=FALSE,fig.width=14, fig.height=12}
+# analysis on the scaled data
+scaled <- scale(human)
+pca_scaled <- prcomp(scaled)
+summary(pca_scaled)
+biplot(pca_scaled, choices = 1:2, cex = c(0.8, 1), col = c("grey40", "deeppink2")) 
+```
+
+The results are different since the non-scaled data have a wide range of values. The scaled data are scaled to normal distribution, meaning the mean value is 0, and the other indicators in summary (min, max, median...) have a p-value associated with them - that gives us likelihood of observing value at least as extreme. The scaled biplot is better uncover relationships between features and components. The graphical representation is more equally distributed in the scaled data.
+
+The non-scaled data is almost undecipherable. Nevertheless, it shows us a strong correlation between mat.mor and PC1 and a strong correlation between GNI and PC2. Length of these two features also suggest their very high standard deviation. Mat.mor and GNI are close to orthogonal to each other, that means there is almost no correlation between these two features.
+
+Concerning the scaled data, we can see that there are basically three groups of variables strongly correlated with each other - life.exp & edu, mat.mor & ado.birt and parli.fm & labo. We can see a strong negative correlation in general between groups one and two and no correlation between 1,2 and 3.
+
+The first principal component is strongly correlated with 6 of the original variables. With ado.birt and mat.mor positively and with edu.exp, edu.fm, life.exp and GNI negatively. The second one positively correlated with parli.f and labo.fm. This overview is just a different perspective of the prior paragraph.
+
+## Multiple Correspondence Analysis
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+#loading data
+data("tea")
+```
+
