@@ -64,7 +64,42 @@ The first principal component is strongly correlated with 6 of the original vari
 ## Multiple Correspondence Analysis
 
 ```{r echo=TRUE, message=FALSE, warning=FALSE}
-#loading data
+# loading data
 data("tea")
 ```
+```{r}
+# exploring the data
+dim(tea)
+str(tea)
+```
 
+There are 300 observations of 36 variables. The data basically covers who, when, where, with whom likes to drink tea.
+
+```{r , fig.width=14, fig.height=12}
+ggpairs(tea[,1:6])
+ggpairs(tea[,7:12])
+ggpairs(tea[,13:18])
+ggpairs(tea[,19:24])
+ggpairs(tea[,25:30])
+ggpairs(tea[,31:36])
+```
+
+We can see distributions of all variables from the graphs above.
+
+```{r}
+# Multiple Correspondence Analysis
+# choosing the kolumns to keep
+keep <- c("Tea", "healthy", "resto", "sugar", "where", "dinner")
+tea_keep <- select(tea, one_of(keep))
+mca <- MCA(tea_keep, graph = FALSE)
+summary(mca)
+```
+
+The first dimension explains 18% of the variance in data and the second 16%. That´s not a lot.In categories, the v.test column, if the value is below/above +/- 1.96, we can say that the coordinate is significantly different from zero.In the first dimension, green, resto and Not.resto seem to be the most significant. In the second it is black, Earl grey, No.sugar and sugar. In categorical variables, no variable is particulary close to one so it does not suggest a very strong link between variables and the dimensions.
+
+```{r}
+# biplot
+plot(mca, invisible=c("ind"))
+```
+
+The distance between variable categories gives a measure of their similarity. For instance, earl grey and not.healthy are very similar, so are tea shop and green. Dinner seems to be the most unlike any other.

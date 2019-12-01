@@ -35,3 +35,12 @@ human1 <- select(human1, -Country)
 
 # saving the df
 write.csv(human1, file = "data/human.csv", row.names = TRUE)
+
+
+ggpairs(human2)
+cor(human2) %>% corrplot(type = "upper")
+
+scaled <- scale(human2)
+pca_human <- prcomp(scaled)
+biplot(pca_human, choices = 1:2, cex = c(0.8, 1), col = c("grey40", "deeppink2"))        
+summary(pca_human)
