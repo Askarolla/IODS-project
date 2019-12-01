@@ -53,7 +53,7 @@ summary(pca_scaled)
 biplot(pca_scaled, choices = 1:2, cex = c(0.8, 1), col = c("grey40", "deeppink2")) 
 ```
 
-The results are different since the non-scaled data have a wide range of values. The scaled data are scaled to normal distribution, meaning the mean value is 0, and the other indicators in summary (min, max, median...) have a p-value associated with them - that gives us likelihood of observing value at least as extreme. The scaled biplot is better uncover relationships between features and components. The graphical representation is more equally distributed in the scaled data.
+The results are different since the non-scaled data have a wide range of values. The scaled data are scaled to normal distribution, meaning the mean value is 0, and the other indicators in summary (min, max, median...) have a p-value associated with them - that gives us likelihood of observing value at least as extreme. The scaled biplot is better to uncover relationships between features and components. The graphical representation is more equally distributed in the scaled data.
 
 The non-scaled data is almost undecipherable. Nevertheless, it shows us a strong correlation between mat.mor and PC1 and a strong correlation between GNI and PC2. Length of these two features also suggest their very high standard deviation. Mat.mor and GNI are close to orthogonal to each other, that means there is almost no correlation between these two features.
 
@@ -89,8 +89,7 @@ We can see distributions of all variables from the graphs above.
 ```{r}
 # Multiple Correspondence Analysis
 # choosing the kolumns to keep
-keep <- c("Tea", "healthy", "resto", "sugar", "where", "dinner")
-tea_keep <- select(tea, one_of(keep))
+tea_keep <- dplyr::select(tea, one_of(c("Tea", "healthy", "resto", "sugar", "where", "dinner")))
 mca <- MCA(tea_keep, graph = FALSE)
 summary(mca)
 ```
