@@ -44,3 +44,7 @@ scaled <- scale(human2)
 pca_human <- prcomp(scaled)
 biplot(pca_human, choices = 1:2, cex = c(0.8, 1), col = c("grey40", "deeppink2"))        
 summary(pca_human)
+
+tea_keep <- dplyr::select(tea, one_of(c("Tea", "healthy", "resto", "sugar", "where", "dinner")))
+mca <- MCA(tea_keep, graph = FALSE)
+summary(mca)

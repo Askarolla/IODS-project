@@ -1,0 +1,64 @@
+# Analysis of longtitudinal data
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(ggplot2)
+
+#loading the data
+rats <- read.csv("data/rats.csv")
+
+```
+```{r}
+#take a look at the data
+str(rats)
+```
+
+```{r}
+#factoring
+rats$ID <- as.factor(rats$ID)
+rats$Group <- as.factor(rats$Group)
+
+```
+
+After reading the data, I needed to convert the selected variables to factors again.
+
+```{r}
+# Standardise the variable bprs
+rats <- rats %>%
+  group_by(Time) %>%
+  mutate(stdrats = (Weight - mean(Weight))/sd(Weight) ) %>%
+  ungroup()
+
+#plot
+ggplot(rats, aes(x = Time, y = stdrats, linetype = ID)) +
+  geom_line() +
+  scale_linetype_manual(values = rep(1:10, times=4)) +
+  facet_grid(. ~ Group, labeller = label_both) +
+  scale_y_continuous(name = "standardized rats")
+```
+
+
+```{r}
+# Number of weeks, baseline (week 0) included
+n <- rats$Time %>% unique() %>% length()
+
+# Summary data with mean and standard error of rats by group and time 
+ratss <- rats %>%
+  group_by(Group, Time) %>%
+  summarise( mean = mean(Weight), se = sd(Weight)/sqrt(n) ) %>%
+  ungroup()
+```
+
+
+```{r}
+# Plot the mean profiles
+ggplot(ratss, aes(x = Time, y = mean, linetype = Group, shape = Group)) +
+  geom_line() +
+  scale_linetype_manual(values = c(1,2,3)) +
+  geom_point(size=3) +
+  scale_shape_manual(values = c(1,2,3)) +
+  geom_errorbar(aes(ymin = mean - se, ymax = mean + se, linetype="1"), width=0.3) +
+  theme(legend.position = c(0.8,0.8)) +
+  scale_y_continuous(name = "mean(Weight) +/- se(Weight)")
+```
+
